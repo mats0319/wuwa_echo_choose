@@ -1,5 +1,5 @@
-import { Resonator } from "@/ts/data.ts";
-import { jinxi } from "@/data/resonator_jin_xi.ts";
+import { jinxi } from "@/data/resonators/resonator_jin_xi.ts";
+import { Resonator } from "@/data/define_resonator.ts";
 
 export { resonatorList };
 

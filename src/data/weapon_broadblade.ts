@@ -1,5 +1,5 @@
 // 重剑
-import { Weapon } from "@/ts/data.ts";
+import { Weapon } from "@/data/define_weapon.ts";
 
 export { broadblade };
 

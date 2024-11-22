@@ -11,7 +11,7 @@ export interface IResonator {
     critDMG: number;
 
     dmgExpectation?: number; // use for order
-    echoAssembleNumber?: number; // use for display
+    echoAssembleNumber?: number; // use for show
 }
 
 export function deepCopyIResonator(ir: IResonator): IResonator {
