@@ -14,23 +14,23 @@ import {
     addAttackPercentage, addAttributeDMGBonus,
     addCritDMG,
     addCritRate,
-    deepCopyIResonator, formatIResonator,
-    IResonator
-} from "@/data/define_i_resonator.ts";
+    deepCopyCalcRes, formatCalcRes,
+    CalcRes
+} from "@/data/define_calc_res.ts";
 
 // calcDMGExpectation calc dmg expectation in all situation, according to given 'IResonator', sort res
-export function calcDMGExpectation(ir: IResonator): Array<IResonator> {
-    let res: Array<IResonator> = new Array<IResonator>(9);
+export function calcDMGExpectation(ir: CalcRes): Array<CalcRes> {
+    let res: Array<CalcRes> = new Array<CalcRes>(9);
 
     for (let i = 0; i < 9; i++) {
-        let resTemp = applyEchoAssemble(deepCopyIResonator(ir), i + 1);
+        let resTemp = applyEchoAssemble(deepCopyCalcRes(ir), i + 1);
 
         // default crit.rate and crit.dmg
         resTemp.critRate += 0.063 * 5;
         resTemp.critDMG += 0.126 * 5;
 
         calcATKAndDMGExpectation(resTemp);
-        formatIResonator(resTemp);
+        formatCalcRes(resTemp);
 
         res[i] = resTemp;
     }
@@ -41,7 +41,7 @@ export function calcDMGExpectation(ir: IResonator): Array<IResonator> {
 }
 
 // applyEchoAssemble 应用n号声骸组合
-function applyEchoAssemble(ir: IResonator, n: number): IResonator {
+function applyEchoAssemble(ir: CalcRes, n: number): CalcRes {
     ir.echoAssembleNumber = n;
     switch (n) {
         case 1:
@@ -105,7 +105,7 @@ function applyEchoAssemble(ir: IResonator, n: number): IResonator {
     return ir;
 }
 
-function calcATKAndDMGExpectation(ir: IResonator) {
+function calcATKAndDMGExpectation(ir: CalcRes) {
     ir.attack = ir.attack_base * (1 + ir.attack_percentage);
     // 暴击乘区计算公式为：基础伤害+暴击增伤期望，暴击增伤期望=暴击率*暴击增伤
     ir.dmgExpectation = mathCeil(ir.attack * ir.attributeDMGBonus * (1 + ir.critRate * (ir.critDMG - 1)));

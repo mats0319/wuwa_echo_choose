@@ -3,13 +3,13 @@ import {
     addAttackPercentage,
     addAttributeDMGBonus, addCritDMG,
     addCritRate,
-    IResonator
-} from "@/data/define_i_resonator.ts";
+    CalcRes
+} from "@/data/define_calc_res.ts";
 import { deepCopyResonator, Resonator } from "@/data/define_resonator.ts";
 import { deepCopyWeapon, Weapon } from "@/data/define_weapon.ts";
 
 // NewIResonatorForCalc generate a new 'IResonator' for calc
-export function NewIResonatorForCalc(r: Resonator, resonanceChain: number, w: Weapon): IResonator {
+export function NewIResonatorForCalc(r: Resonator, resonanceChain: number, w: Weapon): CalcRes {
     // deep copy, prevent pollution data
     let resonatorCopy = deepCopyResonator(r);
     let weaponCopy = deepCopyWeapon(w);
@@ -18,7 +18,7 @@ export function NewIResonatorForCalc(r: Resonator, resonanceChain: number, w: We
 
     applyWeapon(resonatorCopy, weaponCopy);
 
-    return <IResonator>{
+    return <CalcRes>{
         attack: 0,
         attack_base: resonatorCopy.attack_base,
         attack_percentage: resonatorCopy.attack_percentage,
@@ -55,8 +55,8 @@ function applyResonanceChain(r: Resonator, resonanceChain: number) {
     }
 }
 
-function applyWeapon(ir: IResonator, w: Weapon) {
-    addAttackBase(ir, w.attack)
+function applyWeapon(ir: CalcRes, w: Weapon) {
+    addAttackBase(ir, w.attack_base)
     addAttackPercentage(ir, w.attack_percentage);
     addAttributeDMGBonus(ir, w.attributeDMGBonus);
     addCritRate(ir, w.critRate);

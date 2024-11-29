@@ -82,12 +82,12 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { resonatorList } from "@/data/resonators.ts";
-import { broadblade } from "@/data/weapon_broadblade.ts";
+import { broadblade } from "@/data/weapons/weapon_broadblade.ts";
 import { calcDMGExpectation, showEchoAssemble } from "@/ts/echo_assemble.ts";
 import { mathCeil } from "@/ts/utils.ts";
 import { Resonator } from "@/data/define_resonator.ts";
 import { Weapon, WeaponType } from "@/data/define_weapon.ts";
-import { IResonator } from "@/data/define_i_resonator.ts";
+import { CalcRes } from "@/data/define_calc_res.ts";
 import { log } from "@/ts/log.ts";
 import { NewIResonatorForCalc } from "@/ts/calc.ts";
 
@@ -97,8 +97,8 @@ let weaponForSelect = ref<Array<Weapon>>();
 let weapon = ref<Weapon>();
 
 let showRes = ref<boolean>(false);
-let calcRes = ref<Array<IResonator>>();
-let calcResForShow = ref<Array<IResonator>>();
+let calcRes = ref<Array<CalcRes>>();
+let calcResForShow = ref<Array<CalcRes>>();
 
 function startCalc(): void {
     if (!resonator.value || resonator.value.name.length === 0) {
@@ -125,7 +125,7 @@ function onResonatorChanged(value: Resonator): void {
     weapon.value = new Weapon();
 
     if (!!value) {
-        switch (value.useWeapon) {
+        switch (value.weaponType) {
             case WeaponType.broadblade:
                 weaponForSelect.value = broadblade;
                 break;
